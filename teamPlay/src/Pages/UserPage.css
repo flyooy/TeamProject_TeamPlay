@@ -1,0 +1,118 @@
+.user-page {
+  font-family: 'Arial', sans-serif;
+  background-color: #e7f6fd;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем элементы по горизонтали */
+  min-height: 100vh; /* Убедитесь, что контейнер занимает всю высоту */
+  text-align: center;
+  justify-content: center; /* Центрируем элементы по вертикали */
+}
+
+.user-page h1 {
+  color: #333;
+  font-size: 3em;
+  margin: 0; /* Убираем отступы */
+}
+
+.user-page p {
+  color: #555;
+  font-size: 1.5em;
+  margin-bottom: 30px;
+}
+
+.team-info {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+.team-info h2 {
+  color: #007bff;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.team-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.team-info li {
+  background-color: #f0f4f8;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.user-page button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-page button:hover {
+  background-color: #0056b3;
+}
+
+.fight-btn {
+  background-color: #ff4757;
+  color: white;
+  font-size: 1.2em;
+  padding: 15px 30px;
+}
+
+.fight-btn:hover {
+  background-color: #e84118;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; 
+  margin: 20px 0; /* Убедитесь, что это достаточно для отступа */
+}
+
+.app-image-avatar {
+  max-width: 30%; 
+  height: auto; 
+}
+
+@media (max-width: 1200px) {
+  .user-page h1 {
+      font-size: 2em; /* Уменьшаем размер шрифта на мобильных устройствах */
+  }
+
+  .app-image-avatar {
+      max-width: 70%; /* Увеличиваем ширину изображения на мобильных устройствах */
+  }
+
+  .team-info {
+      width: 90%; /* Ширина блока с информацией о команде на мобильных устройствах */
+  }
+
+  .actions {
+      flex-direction: column; /* Кнопки располагаем вертикально */
+  }
+
+  .user-page button {
+      width: 100%; /* Кнопки занимают всю ширину */
+  }
+}
