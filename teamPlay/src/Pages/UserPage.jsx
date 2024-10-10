@@ -1,14 +1,20 @@
-import { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import './UserPage.css';
 import avatarImage from '../assets/img/avatar.jpg';
 function UserPage() {
  
-  const [userName, setUserName] = useState('John Doe');
+  const [userName, setUserName] = useState('');
   const [teamInfo, setTeamInfo] = useState({
     name: 'Team A',
     members: ['Member 1', 'Member 2', 'Member 3', 'Member 4', 'Member 5']
   });
-
+  useEffect(() => {
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) {
+        setUserName(storedUserName); // Set the user's name from local storage
+    }
+}, []);
   const createTeam = () => {
     console.log('Creating team...');
     
@@ -27,7 +33,7 @@ function UserPage() {
   return (
     <div className="user-page">
   
-      <h1>Hello, {userName}!</h1>
+      <h1>Hello, <span className='user-name'>{userName}</span>!</h1>
       <div className="image-container">
         <img src={avatarImage} alt="avatarImage" className="app-image-avatar" />
       </div>

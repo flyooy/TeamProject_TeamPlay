@@ -5,16 +5,17 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем элементы по горизонтали */
-  min-height: 100vh; /* Убедитесь, что контейнер занимает всю высоту */
+  align-items: center; 
+  min-height: 100vh;
   text-align: center;
-  justify-content: center; /* Центрируем элементы по вертикали */
+  justify-content: center; 
 }
 
 .user-page h1 {
+  
   color: #333;
   font-size: 3em;
-  margin: 0; /* Убираем отступы */
+
 }
 
 .user-page p {
@@ -54,40 +55,43 @@
 
 .actions {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   margin-bottom: 30px;
 }
 
-.user-page button {
-  padding: 10px 20px;
+.user-page .actions button{
+  padding: 15px 20px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
+  min-width: 150px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.user-page button:hover {
+.user-page .actions button:hover {
   background-color: #0056b3;
 }
 
 .fight-btn {
-  background-color: #ff4757;
+  width: 26%;
+  background-color: #d5706b;
   color: white;
+  min-width: 150px;
   font-size: 1.2em;
   padding: 15px 30px;
 }
 
 .fight-btn:hover {
-  background-color: #e84118;
+  background-color: #de5049;
 }
 
 .image-container {
   display: flex;
   justify-content: center; 
-  margin: 20px 0; /* Убедитесь, что это достаточно для отступа */
+  margin: 5px 0;
 }
 
 .app-image-avatar {
@@ -95,24 +99,29 @@
   height: auto; 
 }
 
-@media (max-width: 1200px) {
+.user-name{
+  color: #ca8683;
+}
+
+@media (max-width: 800px) {
   .user-page h1 {
-      font-size: 2em; /* Уменьшаем размер шрифта на мобильных устройствах */
+  
+      font-size: 2em; 
   }
 
   .app-image-avatar {
-      max-width: 70%; /* Увеличиваем ширину изображения на мобильных устройствах */
+      max-width: 70%; 
   }
 
   .team-info {
-      width: 90%; /* Ширина блока с информацией о команде на мобильных устройствах */
+      width: 90%; 
   }
 
   .actions {
-      flex-direction: column; /* Кнопки располагаем вертикально */
+      flex-direction: column; 
   }
 
   .user-page button {
-      width: 100%; /* Кнопки занимают всю ширину */
+      width: 100%; 
   }
 }
