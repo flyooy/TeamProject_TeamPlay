@@ -21,7 +21,7 @@ const Team = () => {
     
     const navigate = useNavigate(); 
 
-   
+    
     const userId = localStorage.getItem('userId');
     console.log('User ID from localStorage:', userId);
     const handleCreateTeam = async () => {
@@ -29,6 +29,12 @@ const Team = () => {
         if (!allPlayersFilled || teamName.trim() === '') {
             alert("Please fill in all player names.");
             return;
+        }
+        const allTypesFilled = players.every(player => player.type);
+        console.log("All Types Filled Check:", allTypesFilled, players.map(player => player.type));
+        if (!allTypesFilled) {
+            alert("Please fill in all player types.");
+            return; 
         }
     
         const teamData = {
@@ -45,7 +51,7 @@ const Team = () => {
             player5Name: players[4].name,
             player5Type: players[4].type,    
         };
-    
+        
         try {
             const response = await fetch('http://localhost:8080/api/v1/dash/team', {
                 method: 'POST',
@@ -55,7 +61,7 @@ const Team = () => {
                 },
                 body: JSON.stringify(teamData),
             });
-    
+            console.log('Team Data:', JSON.stringify(teamData));
             if (!response.ok) {
                 const errorData = await response.json();  // Получение деталей ошибки
                 console.error('Response from server:', errorData);  // Логируем ответ от сервера
@@ -63,9 +69,11 @@ const Team = () => {
             }
     
             const responseData = await response.json();
+            
             console.log('Team Created:', responseData);
             navigate('/user'); 
         } catch (error) {
+            console.log('Team Data:', JSON.stringify(teamData));
             console.error("Error creating team:", error);
         }
     };
@@ -78,6 +86,7 @@ const Team = () => {
     const handlePlayerTypeChange = (index, value) => {
         const newPlayers = [...players];
         newPlayers[index].type = value;
+        console.log(`Updated player ${index + 1} type to:`, value);
         setPlayers(newPlayers);
     };
 
@@ -85,7 +94,7 @@ const Team = () => {
         <div className="team-page-container">
         <h1 className="title">Create a new Team</h1>
             <div className="image-and-requirements-container">
-            <div className="fight-image-container">
+            <div className="fight-image-container_team">
                 <img src={createTeam} alt="createTeam" className="create-image-team" />
             </div>
             
@@ -122,14 +131,15 @@ const Team = () => {
                             className="player-name-input"
                         />
                         <select
-                            value={player.type}
-                            onChange={(e) => handlePlayerTypeChange(index, e.target.value)}
-                            className="player-type-select"
-                        >
-                           {PlayerTypes.map(type => (
-                            <option key={type} value={type}>{type}</option>
-                        ))}
-                        </select>
+    value={player.type || ''} 
+    onChange={(e) => handlePlayerTypeChange(index, e.target.value)}
+    className="player-type-select"
+>
+    <option value="" disabled>Select Player Type</option> 
+    {PlayerTypes.map(type => (
+        <option key={type} value={type}>{type}</option>
+    ))}
+</select>
                     </div>
                 ))}
             </div>

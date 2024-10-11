@@ -12,19 +12,49 @@ function UserPage() {
     members: []
   });
   useEffect(() => {
-    const storedUserName = localStorage.getItem("userName");
-    if (storedUserName) {
-        setUserName(storedUserName);
-    }
-    const storedWinRatio = localStorage.getItem("winRatio");
-    if (storedWinRatio) {
-        setWinRatio(storedWinRatio);  
-    }
-    const storedTeamInfo = JSON.parse(localStorage.getItem("teamInfo"));
-    if (storedTeamInfo) {
-        setTeamInfo(storedTeamInfo);
-    }
-}, []);
+    const fetchUserData = async () => {
+      const storedUserName = localStorage.getItem("userName");
+      const storedWinRatio = localStorage.getItem("winRatio");
+      const token = localStorage.getItem("token");
+
+      if (storedUserName) {
+          setUserName(storedUserName);
+      }
+      if (storedWinRatio) {
+          setWinRatio(storedWinRatio);  
+      }
+
+      // Fetch team info from the backend
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/dash", {
+          headers: {
+            "Authorization": "Bearer " + token,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch team info');
+        }
+
+        const data = await response.json();
+        console.log("Team data from API:", data);
+        if (data.teamDTO) {
+          setTeamInfo({
+            name: data.teamDTO.teamName || '',  
+            members: data.teamDTO.Players.map(player => player.name || 'Unnamed')  
+          });
+        } else {
+          setTeamInfo({ name: '', members: [] });  
+        }
+
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+  console.log("Team Info before rendering:", teamInfo);
 
   
   const createTeam = () => {
@@ -73,9 +103,9 @@ function UserPage() {
   
       <p>What do you want?</p>
 
-   
+     
       <div className="team-info">
-      <h2>Your Team: {teamInfo.name}</h2>
+        <h2>Your Team: {teamInfo.name}</h2>
         <ul>
           {teamInfo.members.length > 0 ? (
                 teamInfo.members.map((member, index) => (
@@ -84,12 +114,12 @@ function UserPage() {
             ) : (
                 <li>No members in the team</li>
             )}
-                </ul>
-            </div>
+        </ul>
+      </div>
 
       
       <div className="actions">
-        <button onClick={createTeam}>Create Team</button>
+        <button onClick={createTeam} disabled={teamInfo.members.length > 0} >Create Team</button>
         <button  onClick={deleteTeam} disabled={teamInfo.members.length === 0}>Delete Team</button>
       </div>
 
