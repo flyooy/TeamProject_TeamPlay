@@ -47,6 +47,8 @@ function UserPage() {
         if (!response.ok) {
             throw new Error('Failed to delete team');
         }
+        setTeamInfo({ name: '', members: [] });
+        localStorage.removeItem("teamInfo"); 
         navigate('/user'); 
         console.log('Team deleted successfully!');
        
@@ -73,22 +75,22 @@ function UserPage() {
 
    
       <div className="team-info">
-                <h2>Your Team: {teamInfo.name}</h2>
-                <ul>
-                    {teamInfo.members.length > 0 ? (
-                        teamInfo.members.map((member, index) => (
-                            <li key={index}>{member}</li>
-                        ))
-                    ) : (
-                        <li>No members in the team</li>
-                    )}
+      <h2>Your Team: {teamInfo.name}</h2>
+        <ul>
+          {teamInfo.members.length > 0 ? (
+                teamInfo.members.map((member, index) => (
+                    <li key={index}>{member}</li>
+                ))
+            ) : (
+                <li>No members in the team</li>
+            )}
                 </ul>
             </div>
 
       
       <div className="actions">
         <button onClick={createTeam}>Create Team</button>
-        <button onClick={deleteTeam}>Delete Team</button>
+        <button  onClick={deleteTeam} disabled={teamInfo.members.length === 0}>Delete Team</button>
       </div>
 
  

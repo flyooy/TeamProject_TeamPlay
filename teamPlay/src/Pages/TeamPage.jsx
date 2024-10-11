@@ -1,23 +1,73 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './TeamPage.css'; 
+import createTeam from '../assets/img/fencing.jpg';
+import player1Icon from '../assets/img/player_1.png';
+import player2Icon from '../assets/img/player_2.png';
+import player3Icon from '../assets/img/player_3.png';
+import player4Icon from '../assets/img/player_4.png';
+import player5Icon from '../assets/img/player_5.png';
 
+const PlayerTypes = ['ROOKIE', 'NORMAL', 'VETERAN', 'LEGENDARY'];
 const Team = () => {
     const [teamName, setTeamName] = useState('');
     const [players, setPlayers] = useState([
-        { name: '', type: 'Rookie' },
-        { name: '', type: 'Normal' },
-        { name: '', type: 'Normal' },
-        { name: '', type: 'Veteran' },
-        { name: '', type: 'Legendary' },
+        { name: '', type: '', icon: player1Icon },
+        { name: '', type: '', icon: player2Icon },
+        { name: '', type: '', icon: player3Icon },
+        { name: '', type: '', icon: player4Icon },
+        { name: '', type: '', icon: player5Icon },
     ]);
+    
     const navigate = useNavigate(); 
-    const handleCreateTeam = () => {
-       
-        console.log('Team Created:', { teamName, players });
 
-        
-        navigate('/user'); 
+   
+    const userId = localStorage.getItem('userId');
+    console.log('User ID from localStorage:', userId);
+    const handleCreateTeam = async () => {
+        const allPlayersFilled = players.every(player => player.name.trim() !== '');
+        if (!allPlayersFilled || teamName.trim() === '') {
+            alert("Please fill in all player names.");
+            return;
+        }
+    
+        const teamData = {
+            userId,
+            teamName,
+            player1Name: players[0].name,
+            player1Type: players[0].type,
+            player2Name: players[1].name,
+            player2Type: players[1].type,
+            player3Name: players[2].name,
+            player3Type: players[2].type,
+            player4Name: players[3].name,
+            player4Type: players[3].type,
+            player5Name: players[4].name,
+            player5Type: players[4].type,    
+        };
+    
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/dash/team', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                },
+                body: JSON.stringify(teamData),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();  // Получение деталей ошибки
+                console.error('Response from server:', errorData);  // Логируем ответ от сервера
+                throw new Error('Failed to create team');
+            }
+    
+            const responseData = await response.json();
+            console.log('Team Created:', responseData);
+            navigate('/user'); 
+        } catch (error) {
+            console.error("Error creating team:", error);
+        }
     };
     const handlePlayerNameChange = (index, value) => {
         const newPlayers = [...players];
@@ -33,7 +83,12 @@ const Team = () => {
 
     return (
         <div className="team-page-container">
-            <h1 className='title'>Create a new Team</h1>
+        <h1 className="title">Create a new Team</h1>
+            <div className="image-and-requirements-container">
+            <div className="fight-image-container">
+                <img src={createTeam} alt="createTeam" className="create-image-team" />
+            </div>
+            
             <div className="team-requirements">
                 <h2>Das Team muss beinhalten:</h2>
                 <ul>
@@ -42,10 +97,11 @@ const Team = () => {
                     <li>1x Veteran</li>
                     <li>1x Legendary</li>
                 </ul>
-            </div>
+                </div>
+        </div>
             <input
                 type="text"
-                placeholder={`Team Name (${teamName})`}
+                placeholder={`Team Name`}
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
                 className="team-name-input"
@@ -54,13 +110,13 @@ const Team = () => {
                 {players.map((player, index) => (
                     <div key={index} className="player-container">
                         <img
-                            src={`https://via.placeholder.com/50`} 
+                            src={player.icon}
                             alt={`Player ${index + 1}`}
-                                className="player-icon"
+                            className="player-icon"
                         />
                         <input
                             type="text"
-                            placeholder={`Player ${index + 1} Name (${player.name})`}
+                            placeholder={`Player ${index + 1} Name`}
                             value={player.name}
                             onChange={(e) => handlePlayerNameChange(index, e.target.value)}
                             className="player-name-input"
@@ -70,10 +126,9 @@ const Team = () => {
                             onChange={(e) => handlePlayerTypeChange(index, e.target.value)}
                             className="player-type-select"
                         >
-                            <option value="Rookie">Rookie</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Veteran">Veteran</option>
-                            <option value="Legendary">Legendary</option>
+                           {PlayerTypes.map(type => (
+                            <option key={type} value={type}>{type}</option>
+                        ))}
                         </select>
                     </div>
                 ))}

@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center; 
-  min-height: 100vh;
+  min-height: 90vh;
   text-align: center;
   justify-content: center; 
 }
@@ -14,8 +14,11 @@
 .user-page h1 {
   
   color: #333;
-  font-size: 3em;
+  font-size: 2.5em;
 
+}
+.user-page h2 {
+  margin: -4px;
 }
 
 .user-page p {
@@ -59,6 +62,7 @@
   margin-bottom: 30px;
 }
 
+
 .user-page .actions button{
   padding: 15px 20px;
   background-color: #007bff;
@@ -74,7 +78,11 @@
 .user-page .actions button:hover {
   background-color: #0056b3;
 }
-
+.actions button:disabled{
+  background-color: grey;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 .fight-btn {
   width: 26%;
   background-color: #d5706b;
@@ -90,7 +98,10 @@
 .fight-btn:disabled{
   background-color: grey;
   cursor: not-allowed;
+  opacity: 0.6;
 }
+
+
 
 .image-container {
   display: flex;
@@ -99,7 +110,7 @@
 }
 
 .app-image-avatar {
-  max-width: 30%; 
+  max-width: 20%; 
   height: auto; 
 }
 

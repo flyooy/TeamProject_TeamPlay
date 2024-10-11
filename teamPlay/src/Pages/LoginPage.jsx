@@ -7,6 +7,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState('');
   const [winRatio, setWinRatio] = useState(0);
+  const [teamInfo, setTeamInfo] = useState({ name: '', members: [] });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,14 +48,20 @@ export default function LoginPage() {
         
         localStorage.setItem("token", data.token);
         sessionStorage.setItem("token", data.token); 
-
+        
+        
        
         return fetchUserDashboard(data.token);
       })
       .then((userData) => {
         console.log("User dashboard data:", userData); 
 
-        
+        if (userData.id) {
+          console.log("User ID found:", userData.id);
+          localStorage.setItem("userId", userData.id); // Сохраняем userId из userData
+      } else {
+          console.error("No userId found in userData");
+      }
         if (userData.name) {
           console.log("User name found:", userData.name);
           localStorage.setItem("userName", userData.name); 
@@ -70,16 +77,16 @@ export default function LoginPage() {
           console.error("No win ratio found in response");
         }
         if (userData.teamDTO) {
-          localStorage.setItem("teamInfo", JSON.stringify({
-              name: userData.teamDTO.name,
-              members: userData.teamDTO.members || [] 
-          }));
-          setTeamInfo({
-              name: userData.teamDTO.name,
-              members: userData.teamDTO.members || [],
-          });
+          const teamInfo = {
+            name: userData.teamDTO.teamName, // Получаем teamName
+            members: userData.teamDTO.Players.map(player => player.name || "Unnamed")
+          };
+          localStorage.setItem("teamInfo", JSON.stringify(teamInfo));
+          setTeamInfo(teamInfo);
       } else {
           console.error("No team data found in response");
+          localStorage.removeItem("teamInfo");
+        setTeamInfo({ name: '', members: [] });
       }
 
         navigate("/user");
