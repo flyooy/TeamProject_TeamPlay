@@ -1,0 +1,23 @@
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin-top: 20px;
+}
+.fight-image-container {
+  margin-bottom: 120px;
+    width: 100%; 
+    overflow: hidden; 
+}
+
+.fight-image-f {
+    width: 100%; 
+    height: auto; 
+   
+}
+
+.result h2{
+    text-align: center;
+}

@@ -87,6 +87,10 @@
 .fight-btn:hover {
   background-color: #de5049;
 }
+.fight-btn:disabled{
+  background-color: grey;
+  cursor: not-allowed;
+}
 
 .image-container {
   display: flex;
@@ -124,4 +128,5 @@
   .user-page button {
       width: 100%; 
   }
+  
 }

@@ -8,6 +8,7 @@ import RegistrationPage from './Pages/RegistrationPage.jsx'
 import FightPage from './Pages/FightPage.jsx'
 import UserPage from './Pages/UserPage.jsx'
 import UserSelectionPage from './Pages/UserSelectionPage.jsx'
+import TeamPage from './Pages/TeamPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
   {
     path: "/userselection",
     element: <UserSelectionPage />
+  }
+  ,
+  {
+    path: "/createteam",
+    element: <TeamPage />
   }
   
 ])
