@@ -43,6 +43,10 @@
   margin-bottom: 10px;
 }
 
+.team-info span {
+  color: rgb(17, 17, 20);
+}
+
 .team-info ul {
   list-style-type: none;
   padding: 0;

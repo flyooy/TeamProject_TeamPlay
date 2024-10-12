@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import './UserPage.css';
-import avatarImage from '../assets/img/avatar.jpg';
 import { useNavigate } from 'react-router-dom';
+import avatarImage from '../assets/img/avatar.jpg';
+import './UserPage.css';
 function UserPage() {
   const navigate = useNavigate(); 
   const [userName, setUserName] = useState('');
-  const [winRatio, setWinRatio] = useState(0); 
+  const [winRatio, setWinRatio] = useState(0);
+  const [teamRatio, setTeamRatio] = useState(0);
   const [teamInfo, setTeamInfo] = useState({
     name: '',
     members: []
@@ -15,6 +16,7 @@ function UserPage() {
     const fetchUserData = async () => {
       const storedUserName = localStorage.getItem("userName");
       const storedWinRatio = localStorage.getItem("winRatio");
+      const storedTeamRatio = localStorage.getItem("teamRatio");
       const token = localStorage.getItem("token");
 
       if (storedUserName) {
@@ -22,6 +24,9 @@ function UserPage() {
       }
       if (storedWinRatio) {
           setWinRatio(storedWinRatio);  
+      }
+      if (storedTeamRatio) {
+          setTeamRatio(storedTeamRatio);
       }
 
       // Fetch team info from the backend
@@ -96,7 +101,7 @@ function UserPage() {
     <div className="user-page">
   
       <h1>Hello, <span className='user-name'>{userName}</span>!</h1>
-      <h2>Your Rating: {winRatio}</h2> 
+      <h2>Your Rating: {winRatio}%</h2> 
       <div className="image-container">
         <img src={avatarImage} alt="avatarImage" className="app-image-avatar" />
       </div>
@@ -105,16 +110,18 @@ function UserPage() {
 
      
       <div className="team-info">
-        <h2>Your Team: {teamInfo.name}</h2>
+        {teamInfo.name.length > 0 ? 
+        <>
+        <h2>Your Team: <span>{teamInfo.name}</span> Rating: <span>{teamRatio}%</span></h2>
         <ul>
-          {teamInfo.members.length > 0 ? (
-                teamInfo.members.map((member, index) => (
+          {teamInfo.members.map((member, index) => (
                     <li key={index}>{member}</li>
-                ))
-            ) : (
-                <li>No members in the team</li>
-            )}
+                ))}
         </ul>
+        </>
+        : 
+        <h2>You need a Team! </h2>
+          }
       </div>
 
       
