@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import avatarImage from '../assets/img/avatar.jpg';
 import './UserPage.css';
 function UserPage() {
+  const [token, setToken] = useState('');
   const navigate = useNavigate(); 
   const [userName, setUserName] = useState('');
   const [winRatio, setWinRatio] = useState(0);
@@ -12,44 +13,54 @@ function UserPage() {
     name: '',
     members: []
   });
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, [])
+
   useEffect(() => {
     const fetchUserData = async () => {
-      const storedUserName = localStorage.getItem("userName");
-      const storedWinRatio = localStorage.getItem("winRatio");
-      const storedTeamRatio = localStorage.getItem("teamRatio");
-      const token = localStorage.getItem("token");
-
-      if (storedUserName) {
-          setUserName(storedUserName);
-      }
-      if (storedWinRatio) {
-          setWinRatio(storedWinRatio);  
-      }
-      if (storedTeamRatio) {
-          setTeamRatio(storedTeamRatio);
-      }
+     
 
       // Fetch team info from the backend
       try {
         const response = await fetch("http://localhost:8080/api/v1/dash", {
           headers: {
             "Authorization": "Bearer " + token,
+            "Content-Type": "application/json",
           },
-        });
+        })
 
         if (!response.ok) {
           throw new Error('Failed to fetch team info');
         }
 
         const data = await response.json();
-        console.log("Team data from API:", data);
-        if (data.teamDTO) {
+        if (data.name) {
+           setUserName(data.name);
+        } else {
+          throw new Error('Failed to fetch Username');
+        }
+
+        if (data.winRatio) {
+          setWinRatio(data.winRatio);
+        } else {
+          throw new Error('Failed to fetch winRatio');
+        }
+
+        if (data.team) {
           setTeamInfo({
-            name: data.teamDTO.teamName || '',  
-            members: data.teamDTO.Players || 'Unnamed'  
+            name: data.team.teamName || '',  
+            members: data.team.Players || 'Unnamed'  
           });
         } else {
           setTeamInfo({ name: '', members: [] });  
+        }
+
+        if (data.teamRatio) {
+          setTeamRatio(data.teamRatio)
+        } else {
+          throw new Error('Failed to fetch teamRatio');
         }
 
       } catch (error) {
@@ -58,7 +69,7 @@ function UserPage() {
     };
 
     fetchUserData();
-  }, []);
+  }, [token]);
   console.log("Team Info before rendering:", teamInfo);
 
   
@@ -68,8 +79,6 @@ function UserPage() {
   };
 
   const deleteTeam = async () => {
-    const token = localStorage.getItem("token"); 
-
     try {
         const response = await fetch("http://localhost:8080/api/v1/dash/team", {
             method: "DELETE",
@@ -82,10 +91,11 @@ function UserPage() {
         if (!response.ok) {
             throw new Error('Failed to delete team');
         }
-        setTeamInfo({ name: '', members: [] });
-        localStorage.removeItem("teamInfo"); 
-        navigate('/user'); 
-        console.log('Team deleted successfully!');
+        setTeamInfo({
+          name: '',
+          members: []
+        });
+        setTeamRatio(0);
        
     } catch (error) {
         console.error("Error deleting team:", error);
@@ -105,10 +115,7 @@ function UserPage() {
       <div className="image-container">
         <img src={avatarImage} alt="avatarImage" className="app-image-avatar" />
       </div>
-  
-      <p>What do you want?</p>
-
-     
+   
       <div className="team-info">
         {teamInfo.name.length > 0 ? 
         <>
@@ -128,6 +135,7 @@ function UserPage() {
           }
       </div>
 
+      <p>What do you want?</p>
       
       <div className="actions">
         <button onClick={createTeam} disabled={teamInfo.members.length > 0} >Create Team</button>
