@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import fight from '../assets/img/fencing-run.gif';
 import { useNavigate } from 'react-router-dom';
+import fight from '../assets/img/fencing-run.gif';
 import './FightPage.css';
 export default function FightPage() {
     const [fightResult, setFightResult] = useState(null);
@@ -22,7 +22,7 @@ export default function FightPage() {
     return (
         <div className="fight-container">
             <h1 className="fight-title_f">Fight Result</h1>
-            <img src={fight} alt="fight" className="fight-image-f" />
+            <img src={fight} alt="fight" className={fightResult ? "fight-image-f-win" : "fight-image-f" }/>
             {fightResult !== null ? (
                 <p className={`fight-result ${fightResult ? 'win' : 'lose'}`}>
                     {fightResult ? 'You won!' : 'You lost!'}
