@@ -46,7 +46,7 @@ function UserPage() {
         if (data.teamDTO) {
           setTeamInfo({
             name: data.teamDTO.teamName || '',  
-            members: data.teamDTO.Players.map(player => player.name || 'Unnamed')  
+            members: data.teamDTO.Players || 'Unnamed'  
           });
         } else {
           setTeamInfo({ name: '', members: [] });  
@@ -112,10 +112,14 @@ function UserPage() {
       <div className="team-info">
         {teamInfo.name.length > 0 ? 
         <>
-        <h2>Your Team: <span>{teamInfo.name}</span> Rating: <span>{teamRatio}%</span></h2>
+        <h2>Your Team: <span className='team-detail'>{teamInfo.name}</span> Rating: <span className='team-detail'>{teamRatio}%</span></h2>
         <ul>
           {teamInfo.members.map((member, index) => (
-                    <li key={index}>{member}</li>
+                    <li key= {index}>
+                      <span className='li-types'>Name: <span className='li-typedetail'>{member.name}</span></span>
+                      <span className='li-types'>Lvl: <span className='li-typedetail'>{member.powerlevel}</span></span>
+                      <span className='li-types'><span className='li-typedetail'>{member.type.toString().toLowerCase()}</span></span>
+                    </li>
                 ))}
         </ul>
         </>

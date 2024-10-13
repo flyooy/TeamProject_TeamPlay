@@ -43,7 +43,7 @@
   margin-bottom: 10px;
 }
 
-.team-info span {
+.team-info .team-detail {
   color: rgb(17, 17, 20);
 }
 
@@ -52,13 +52,32 @@
   padding: 0;
 }
 
-.team-info li {
+.team-info ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: #f0f4f8;
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
   color: #333;
 }
+
+.team-info ul li .li-types {
+  width: 33%;
+
+  font-weight: 600;
+
+
+}
+
+.team-info ul li .li-typedetail {
+  font-weight: 200;
+
+  text-transform: capitalize;
+
+}
+
 
 .actions {
   display: flex;
