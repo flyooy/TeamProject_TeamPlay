@@ -141,6 +141,25 @@
   color: #ca8683;
 }
 
+
+.logout-button-container {
+  position: absolute;
+  top: 87px;
+  right: 300px; 
+}
+
+.logout-button {
+  background-color: #ff5c5c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #ff3c3c;
+}
 @media (max-width: 800px) {
   .user-page h1 {
   

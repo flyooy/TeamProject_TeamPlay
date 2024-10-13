@@ -8,12 +8,14 @@ export default function LoginPage() {
   const [userName, setUserName] = useState('');
   const [winRatio, setWinRatio] = useState(0);
   const [teamInfo, setTeamInfo] = useState({ name: '', members: [] });
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserName = localStorage.getItem("userName");
     if (storedUserName) {
       setUserName(storedUserName);
+      console.log('User already logged in:', storedUserName);
     }
     const storedWinRatio = localStorage.getItem("winRatio");
     if (storedWinRatio) {
@@ -39,20 +41,31 @@ export default function LoginPage() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to sign in. Please check your credentials.');
+          if (response.status === 401) {
+            throw new Error('Invalid email or password.');
+          } else {
+            throw new Error('Failed to sign in. Please try again.');
+          }
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Auth response data:", data); 
-        
-        localStorage.setItem("token", data.token);
-        navigate("/user");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
+        console.log('Auth response data:', data);
+
+       
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userName', data.userName); 
+        localStorage.setItem('winRatio', data.winRatio); 
+
+      
+        navigate('/user');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setErrorMessage(error.message); 
+      });
+  }
+
 
     function submitByEnter(e) {
       if (e.key === 'Enter') {
@@ -79,6 +92,7 @@ export default function LoginPage() {
           placeholder="Password"
         />
         <button onClick={login}>Login</button>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <a href="/registration">Don't have an account? Sign up</a>
       </div>
     </main>

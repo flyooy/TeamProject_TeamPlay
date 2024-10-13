@@ -101,7 +101,13 @@ function UserPage() {
         console.error("Error deleting team:", error);
     }
 };
-
+const handleLogout = () => {
+  
+  localStorage.removeItem('token'); 
+  
+ 
+  window.location.href = '/login';
+};
   const fight = () => {
     navigate('/userselection'); 
    
@@ -109,7 +115,9 @@ function UserPage() {
 
   return (
     <div className="user-page">
-  
+  <div className="logout-button-container">
+    <button onClick={handleLogout} className="logout-button">Logout</button>
+  </div>
       <h1>Hello <span className='user-name'>{userName}</span>!</h1>
       <h2>Your total rating: {winRatio}%</h2> 
       <div className="image-container">
