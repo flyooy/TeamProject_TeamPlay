@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FormPage.css";
 
@@ -115,6 +115,7 @@ export default function LoginPage() {
   return (
     <main>
       <div>
+        <h2>Login</h2>
         <input
           onChange={(e) => setEmail(e.target.value)}
           type="text"
