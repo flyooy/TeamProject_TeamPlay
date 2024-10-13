@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import './TeamPage.css'; 
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import createTeam from '../assets/img/fencing.jpg';
 import player1Icon from '../assets/img/player_1.png';
 import player2Icon from '../assets/img/player_2.png';
 import player3Icon from '../assets/img/player_3.png';
 import player4Icon from '../assets/img/player_4.png';
 import player5Icon from '../assets/img/player_5.png';
+import './TeamPage.css';
 
 const PlayerTypes = ['ROOKIE', 'NORMAL', 'VETERAN', 'LEGENDARY'];
 const Team = () => {
@@ -35,6 +35,17 @@ const Team = () => {
         if (!allTypesFilled) {
             alert("Please fill in all player types.");
             return; 
+        }
+
+        const typeCounts = players.reduce((counts, player) => {
+            counts[player.type] = (counts[player.type] || 0) + 1;
+            return counts;
+        }, {});
+
+        if (typeCounts['ROOKIE'] !== 1 || typeCounts['NORMAL'] !== 2 ||
+            typeCounts['VETERAN'] !== 1 || typeCounts['LEGENDARY'] !== 1) {
+                alert("Invalid team composition. You need: 1 Rookie, 2 Normal, 1 Veteran, and 1 Legendary.");
+            return;
         }
     
         const teamData = {
