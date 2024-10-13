@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './FormPage.css?v=1'
+import './FormPage.css'
 import { useNavigate } from 'react-router-dom'; 
 
 export default function RegistrationPage() {

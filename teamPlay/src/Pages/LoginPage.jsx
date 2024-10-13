@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./FormPage.css?v=1";
+import "./FormPage.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -122,7 +122,7 @@ export default function LoginPage() {
         />
         <input
           onChange={(e) => setPassword(e.target.value)}
-          type="text"
+          type="password" 
           placeholder="Password"
         />
         <button onClick={login}>Login</button>
