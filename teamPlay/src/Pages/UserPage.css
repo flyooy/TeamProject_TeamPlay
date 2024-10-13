@@ -43,18 +43,41 @@
   margin-bottom: 10px;
 }
 
+.team-info .team-detail {
+  color: rgb(17, 17, 20);
+}
+
 .team-info ul {
   list-style-type: none;
   padding: 0;
 }
 
-.team-info li {
+.team-info ul li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: #f0f4f8;
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
   color: #333;
 }
+
+.team-info ul li .li-types {
+  width: 33%;
+
+  font-weight: 600;
+
+
+}
+
+.team-info ul li .li-typedetail {
+  font-weight: 200;
+
+  text-transform: capitalize;
+
+}
+
 
 .actions {
   display: flex;
@@ -118,6 +141,25 @@
   color: #ca8683;
 }
 
+
+.logout-button-container {
+  position: absolute;
+  top: 87px;
+  right: 300px; 
+}
+
+.logout-button {
+  background-color: #ff5c5c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #ff3c3c;
+}
 @media (max-width: 800px) {
   .user-page h1 {
   

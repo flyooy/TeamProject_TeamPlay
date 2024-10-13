@@ -9,6 +9,7 @@ import FightPage from './Pages/FightPage.jsx'
 import UserPage from './Pages/UserPage.jsx'
 import UserSelectionPage from './Pages/UserSelectionPage.jsx'
 import TeamPage from './Pages/TeamPage.jsx'
+import ProtectedRoute from './Components/ProtectedRoute'; 
 
 const router = createBrowserRouter([
   {
@@ -25,20 +26,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/fight",
-    element: <FightPage />
+    element: <ProtectedRoute element={<FightPage />} />
   },
   {
     path: "/user",
-    element: <UserPage />
+    element: <ProtectedRoute element={<UserPage />} />
   },
   {
     path: "/userselection",
-    element: <UserSelectionPage />
+    element: <ProtectedRoute element={<UserSelectionPage />} />
   }
   ,
   {
     path: "/createteam",
-    element: <TeamPage />
+    element: <ProtectedRoute element={<TeamPage />} /> 
   }
   
 ])

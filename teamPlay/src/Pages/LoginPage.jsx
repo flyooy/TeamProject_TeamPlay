@@ -1,6 +1,8 @@
-import { useState,useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./FormPage.css?v=1";
+
+import "./FormPage.css";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -8,12 +10,14 @@ export default function LoginPage() {
   const [userName, setUserName] = useState('');
   const [winRatio, setWinRatio] = useState(0);
   const [teamInfo, setTeamInfo] = useState({ name: '', members: [] });
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserName = localStorage.getItem("userName");
     if (storedUserName) {
       setUserName(storedUserName);
+      console.log('User already logged in:', storedUserName);
     }
     const storedWinRatio = localStorage.getItem("winRatio");
     if (storedWinRatio) {
@@ -39,82 +43,45 @@ export default function LoginPage() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to sign in. Please check your credentials.');
+          if (response.status === 401) {
+            throw new Error('Invalid email or password.');
+          } else {
+            throw new Error('Failed to sign in. Please try again.');
+          }
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Auth response data:", data); 
-        
-        localStorage.setItem("token", data.token);
-        sessionStorage.setItem("token", data.token); 
-        
-        
+        console.log('Auth response data:', data);
+
        
-        return fetchUserDashboard(data.token);
-      })
-      .then((userData) => {
-        console.log("User dashboard data:", userData); 
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userName', data.userName); 
+        localStorage.setItem('winRatio', data.winRatio); 
 
-        if (userData.id) {
-          console.log("User ID found:", userData.id);
-          localStorage.setItem("userId", userData.id); // Сохраняем userId из userData
-      } else {
-          console.error("No userId found in userData");
-      }
-        if (userData.name) {
-          console.log("User name found:", userData.name);
-          localStorage.setItem("userName", userData.name); 
-          setUserName(userData.name); 
-        } else {
-          console.error("No user name found in response");
-        }
-        if (userData.winRatio !== undefined) {
-          console.log("User win ratio found:", userData.winRatio);
-          localStorage.setItem("winRatio", userData.winRatio); 
-          setWinRatio(userData.winRatio); 
-        } else {
-          console.error("No win ratio found in response");
-        }
-        if (userData.teamDTO) {
-          const teamInfo = {
-            name: userData.teamDTO.teamName, // Получаем teamName
-            members: userData.teamDTO.Players.map(player => player.name || "Unnamed")
-          };
-          localStorage.setItem("teamInfo", JSON.stringify(teamInfo));
-          setTeamInfo(teamInfo);
-      } else {
-          console.error("No team data found in response");
-          localStorage.removeItem("teamInfo");
-        setTeamInfo({ name: '', members: [] });
-      }
-
-        navigate("/user");
+      
+        navigate('/user');
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
+        setErrorMessage(error.message); 
       });
   }
 
-  const fetchUserDashboard = (token) => {
-    return fetch("http://localhost:8080/api/v1/dash", {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch user dashboard');
-        }
-        return response.json();
-      });
-  };
+
+    function submitByEnter(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        login();
+      }
+    }
+
 
   return (
     <main>
       <div>
+        <h2>Login</h2>
         <input
           onChange={(e) => setEmail(e.target.value)}
           type="text"
@@ -122,10 +89,12 @@ export default function LoginPage() {
         />
         <input
           onChange={(e) => setPassword(e.target.value)}
-          type="text"
+          onKeyDown={(e) => submitByEnter(e)}
+          type="password" 
           placeholder="Password"
         />
         <button onClick={login}>Login</button>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <a href="/registration">Don't have an account? Sign up</a>
       </div>
     </main>
