@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './UserSelectionPage.css';
 import { useNavigate } from 'react-router-dom';
 import vs from '../assets/img/vs.jpg';
+import './UserSelectionPage.css';
 
 
 export default function UserSelectionPage() {
@@ -106,43 +106,47 @@ export default function UserSelectionPage() {
                         Random Fight
                     </button>
                     <div className="fight-radio-group">
-                        <label className="fight-label">
+                        <div className='fight-radio-group-div'>
+                            <label className="fight-label">
+                            Standard Fight System
+                            </label>
                             <input
                                 type="radio"
                                 value="standard"
                                 checked={fightSystem === 'standard'}
                                 onChange={() => setFightSystem('standard')}
                             />
-                            Standard Fight System
-                        </label>
-                        <label className="fight-label">
+                        </div>
+                        <div className='fight-radio-group-div'>
+                            <label className="fight-label">
+                                Experimental Fight System
+                            </label>
                             <input
                                 type="radio"
                                 value="experimental"
                                 checked={fightSystem === 'experimental'}
                                 onChange={() => setFightSystem('experimental')}
                             />
-                            Experimental Fight System
-                        </label>
-                        <button 
+                        </div>
+                    </div>
+                    <button 
                             onClick={handleBack} 
-                            className="fight-button"
+                            className="back-button"
                         >
                             Back to User
                         </button>
-                    </div>
                 </div>
 
                 <div className="fight-right">
                     <h2 className="fight-title">Enemy List</h2>
                     <ul className="fight-user-list">
                         {enemyList.length > 0 ? (
-                            enemyList.map((enemy, index) => (
+                            enemyList.map((enemy, index) => ( //hier muss das design noch angepasst werden... neuer span
                                 <li key={index} className="fight-user-item">
                                     <span className="fight-username">{enemy.ownerName}</span>
-                                    <span className="fight-rating">User Rating: {enemy.totalRating}%</span>
-                                    <span className="fight-team">Team: {enemy.teamName}</span>
-                                    <span className="fight-team-rating">Team Rating: {enemy.teamRating}%</span>
+                                    <span className="fight-rating">User Rating: <span className='fight-details'>{enemy.totalRating}%</span></span>
+                                    <span className="fight-team">Team: <span className='fight-details'>{enemy.teamName}</span></span>
+                                    <span className="fight-team-rating">Team Rating: <span className='fight-details'>{enemy.teamRating}%</span></span>
                                     <button
                                         onClick={() => handleFightWithUser(enemy.ownerName)} 
                                         className="fight-user-button"

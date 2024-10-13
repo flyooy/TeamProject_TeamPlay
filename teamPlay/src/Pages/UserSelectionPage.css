@@ -5,13 +5,14 @@
     justify-content: space-between;
     padding: 20px;
     background-color: #e9f0f4;
-    height: 90vh;
-    width: 45vw;
+    min-height: 30vh;
+    min-width: 50vw;
     border: 2px solid #007BFF; 
     border-radius: 15px; 
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
     overflow: hidden; 
 }
+ 
 
 
 .fight-image-container_fight {
@@ -44,9 +45,12 @@
 
 
 .fight-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-top: 10px;
     margin-left: 30px;
-    width: 30%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,12 +62,11 @@
 
 
 .fight-button {
+    margin: 10px 0;
     padding: 15px 30px;
     font-size: 18px;
     cursor: pointer;
-    margin-top: 100px;
-    margin-bottom: 30px;
-    background-color: #007BFF;
+    background-color: #da0505;
     color: white;
     border: none;
     border-radius: 5px;
@@ -71,27 +74,59 @@
 }
 
 .fight-button:hover {
-    background-color: #0056b3;
+    background-color: #6f0303;
 }
 .fight-button:disabled {
     background-color: grey;
     cursor: not-allowed;
 }
 
+.back-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
 .fight-radio-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: -80px;
+    width: 90%;
+    gap: 10px;
 }
 
-.fight-label {
-    margin-bottom: 15px;
+.fight-radio-group-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.fight-radio-group-div input {
+    width: 35px;
+}
+
+
+
+.fight-radio-group-div .fight-label {
     font-size: 16px;
+    text-align: start;
+    font-weight: 700;
 }
 
 
 .fight-right {
+    margin: 10px 30px 0 0;
     width: 50%;
     padding: 20px;
 }
@@ -116,35 +151,34 @@
     flex-direction: column; 
     justify-content: space-between;
     padding: 10px;
-    margin-bottom: 15px; 
+    margin-bottom: 10px; 
     border: 1px solid #ddd; 
     border-radius: 8px; 
     background-color: #f9f9f9; 
 }
-.fight-username, 
-.fight-rating, 
-.fight-team, 
-.fight-team-rating {
+.fight-user-item span {
   margin-bottom: 5px;
-  font-size: 16px; 
+  font-size: 14px; 
+  font-weight: 600;
+  color: #666; 
 }
-.fight-username {
-    font-weight: bold; 
+
+.fight-user-item .fight-username {
+    font-size: 16px; 
+    font-weight: 900;
+    color: darkred;
   }
 
-.fight-rating {
-    color: #666;
-}
-.fight-rating, 
-.fight-team, 
-.fight-team-rating {
-  font-size: 14px; 
-  color: #555; 
+
+
+  .fight-user-item .fight-details {
+    font-weight: 200;
 }
 
 .fight-user-button {
+    width: 50%;
     padding: 6px 12px; 
-    background-color: #4CAF50; 
+    background-color: #da0505; 
     color: white;
     border: none; 
     border-radius: 4px;
@@ -154,7 +188,7 @@
   }
 
   .fight-user-button:hover {
-    background-color: #45a049; 
+    background-color: #6f0303; 
   }
 
 
@@ -167,15 +201,6 @@
     margin-bottom: 20px; 
     font-size: 24px; 
   }
-
-.fight-page-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #e9f0f4; 
-    height: 100vh;
-    width: 50vw;
-}   
 
 .enemy {
     display: flex;
