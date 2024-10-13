@@ -54,6 +54,14 @@ export default function LoginPage() {
         });
     }
 
+    function submitByEnter(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        login();
+      }
+    }
+
 
   return (
     <main>
@@ -66,6 +74,7 @@ export default function LoginPage() {
         />
         <input
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => submitByEnter(e)}
           type="password" 
           placeholder="Password"
         />
