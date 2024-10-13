@@ -110,8 +110,8 @@ function UserPage() {
   return (
     <div className="user-page">
   
-      <h1>Hello, <span className='user-name'>{userName}</span>!</h1>
-      <h2>Your Rating: {winRatio}%</h2> 
+      <h1>Hello <span className='user-name'>{userName}</span>!</h1>
+      <h2>Your total rating: {winRatio}%</h2> 
       <div className="image-container">
         <img src={avatarImage} alt="avatarImage" className="app-image-avatar" />
       </div>
