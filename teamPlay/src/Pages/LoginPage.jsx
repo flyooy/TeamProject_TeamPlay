@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./FormPage.css";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

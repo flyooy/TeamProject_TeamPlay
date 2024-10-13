@@ -72,8 +72,8 @@ const Team = () => {
             });
             console.log('Team Data:', JSON.stringify(teamData));
             if (!response.ok) {
-                const errorData = await response.json();  // Получение деталей ошибки
-                console.error('Response from server:', errorData);  // Логируем ответ от сервера
+                const errorData = await response.json();  
+                console.error('Response from server:', errorData);  
                 throw new Error('Failed to create team');
             }
     
