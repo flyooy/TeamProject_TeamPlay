@@ -22,8 +22,7 @@ const Team = () => {
     const navigate = useNavigate(); 
 
     
-    const userId = localStorage.getItem('userId');
-    console.log('User ID from localStorage:', userId);
+    
     const handleCreateTeam = async () => {
         const allPlayersFilled = players.every(player => player.name.trim() !== '');
         if (!allPlayersFilled || teamName.trim() === '') {
@@ -49,7 +48,6 @@ const Team = () => {
         }
     
         const teamData = {
-            userId,
             teamName,
             player1Name: players[0].name,
             player1Type: players[0].type,
