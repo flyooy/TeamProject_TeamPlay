@@ -19,9 +19,9 @@ function UserPage() {
   }, [])
 
   useEffect(() => {
+    if(token){
     const fetchUserData = async () => {
      
-
       // Fetch team info from the backend
       try {
         const response = await fetch("http://localhost:8080/api/v1/dash", {
@@ -36,40 +36,22 @@ function UserPage() {
         }
 
         const data = await response.json();
-        if (data.name) {
-           setUserName(data.name);
-        } else {
-          throw new Error('Failed to fetch Username');
-        }
-
-        if (data.winRatio) {
+          setUserName(data.name);
           setWinRatio(data.winRatio);
-        } else {
-          throw new Error('Failed to fetch winRatio');
-        }
+          setTeamRatio(data.teamRatio);
 
         if (data.team) {
           setTeamInfo({
             name: data.team.teamName || '',  
             members: data.team.Players || 'Unnamed'  
-          });
-        } else {
-          setTeamInfo({ name: '', members: [] });  
-        }
-
-        if (data.teamRatio) {
-          setTeamRatio(data.teamRatio)
-        } else {
-          throw new Error('Failed to fetch teamRatio');
-        }
-
+          });}
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUserData();
-  }, [token]);
+}}, [token]);
   console.log("Team Info before rendering:", teamInfo);
 
   
