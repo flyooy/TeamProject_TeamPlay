@@ -1,16 +1,4 @@
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #e7f6fd;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-
 main {
   background-color: white;
   padding: 40px;
