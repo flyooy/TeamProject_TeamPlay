@@ -62,7 +62,7 @@ const Team = () => {
         };
         
         try {
-            const response = await fetch('http://localhost:8080/api/v1/dash/team', {
+            const response = await fetch(import.meta.env.VITE_BACKEND + '/api/v1/dash/team', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

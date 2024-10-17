@@ -17,7 +17,7 @@ export default function UserSelectionPage() {
   
     const fetchEnemyList = () => {
         console.log("Fetching enemy list...");
-        fetch("http://localhost:8080/api/v1/game/enemies", { 
+        fetch(import.meta.env.VITE_BACKEND + '/api/v1/game/enemies', { 
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token,
@@ -47,7 +47,7 @@ export default function UserSelectionPage() {
 
     const handleRandomFight = async () => {
         const choice = fightSystem === 'standard' ? 0 : 1; 
-        const response = await fetch(`http://localhost:8080/api/v1/game/fight/random/${choice}`, {
+        const response = await fetch(import.meta.env.VITE_BACKEND + '/api/v1/game/fight/random/${choice}', {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token,
@@ -68,7 +68,7 @@ export default function UserSelectionPage() {
 
     const handleFightWithUser = async (userName) => {
         const choice = fightSystem === 'standard' ? 0 : 1; 
-        const response = await fetch(`http://localhost:8080/api/v1/game/fight/${choice}/${userName}`, {
+        const response = await fetch(import.meta.env.VITE_BACKEND + '/api/v1/game/fight/${choice}/${userName}', {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + token,
