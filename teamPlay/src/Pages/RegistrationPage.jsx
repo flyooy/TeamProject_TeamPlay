@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './FormPage.css'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import './FormPage.css';
 
 export default function RegistrationPage() {
   const [name, setName] = useState("");
@@ -15,7 +15,7 @@ export default function RegistrationPage() {
         password,
       };
   
-      fetch("http://localhost:8080/api/v1/auth/register", {
+      fetch(import.meta.env.VITE_BACKEND + '/api/v1/auth/register', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

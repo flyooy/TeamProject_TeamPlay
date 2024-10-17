@@ -33,7 +33,7 @@ export default function LoginPage() {
     const encoded = btoa(`${email}:${password}`);
     console.log("Encoded credentials: ", encoded);
 
-    fetch("http://localhost:8080/api/v1/auth/signin", {
+    fetch(import.meta.env.VITE_BACKEND + '/api/v1/auth/signin', {
       method: "POST",
       headers: {
         Authorization: "Basic " + encoded,

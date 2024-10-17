@@ -2,3 +2,4 @@
 teamPlay/.dockerignore
 teamPlay/default.conf
 teamPlay/dockerfile
+teamPlay/.env

@@ -24,7 +24,7 @@ function UserPage() {
      
       // Fetch team info from the backend
       try {
-        const response = await fetch("http://localhost:8080/api/v1/dash", {
+        const response = await fetch(import.meta.env.VITE_BACKEND + '/api/v1/dash', {
           headers: {
             "Authorization": "Bearer " + token,
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ function UserPage() {
 
   const deleteTeam = async () => {
     try {
-        const response = await fetch("http://localhost:8080/api/v1/dash/team", {
+        const response = await fetch(import.meta.env.VITE_BACKEND + '/api/v1/dash/team', {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token,

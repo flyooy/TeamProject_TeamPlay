@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'; 
-import './App.css'
+import { Link } from 'react-router-dom';
+import './App.css';
 import athleteImage from './assets/img/athlete-man.jpg';
 
 function App() {
